@@ -1,4 +1,9 @@
 {
+  "name": "videogames",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lilygdu/React-Video-Games.git",
+  "license": "MIT",
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
@@ -8,10 +13,5 @@
   },
   "browserslist": [
     "> 1.5%"
-  ],
-  "name": "videogames",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:lilygdu/React-Video-Games.git",
-  "license": "MIT"
+  ]
 }
