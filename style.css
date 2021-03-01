@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+body {
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+main {
+  margin: 2rem;
+}
+
+#games {
+  margin: 1rem auto;
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-gap: 1rem;
+  max-width: 60rem;
+}
+
+#games li {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background-color: white;
+}
+
+#games li img {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.hidden {
+  display: none;
+}
