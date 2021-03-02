@@ -7,6 +7,8 @@ const App = () => {
   const [games, setGames] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isMoreLoading, setIsMoreLoading] = React.useState(false);
+  const [nextPage, setNextPage] = React.useState(null);
 
   React.useEffect(() => {
     fetchGames();
@@ -14,12 +16,13 @@ const App = () => {
 
   const fetchGames = async () => {
     setIsLoading(true);
+
     const response = await fetch(
       `https://api.rawg.io/api/games?search=${searchTerm}`
     );
-
     const data = await response.json();
 
+    setNextPage(data.next);
     setGames(data.results);
     setIsLoading(false);
   };
@@ -27,6 +30,17 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     fetchGames();
+  };
+
+  const fetchMore = async () => {
+    setIsMoreLoading(true);
+    if (nextPage && !isMoreLoading) {
+      const response = await fetch(nextPage);
+      const data = await response.json();
+      setGames([...games, ...data.results]);
+      setNextPage(data.next);
+    }
+    setIsMoreLoading(false);
   };
 
   return (
@@ -52,6 +66,7 @@ const App = () => {
           ))
         )}
       </ul>
+      {nextPage && <button onClick={fetchMore}>More</button>}
     </div>
   );
 };
