@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Game from "./components/Game";
 import Form from "./components/Form";
-// import Search from "./components/Search";
-// import Button from "./components/Button";
 
 const App = () => {
   const [games, setGames] = React.useState([]);
