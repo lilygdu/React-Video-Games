@@ -37,16 +37,16 @@ const App = () => {
         <input
           id="search"
           name="search"
-          autocomplete="off"
+          autoComplete="off"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         <button type="submit">Submit</button>
       </form>
       <ul id="games">
-        {games.length > 0 && (
-          <Game name={games[0].name} image={games[0].background_image} />
-        )}
+        {games.map((game) => (
+          <Game key={game.id} name={game.name} image={game.background_image} />
+        ))}
       </ul>
     </div>
   );
