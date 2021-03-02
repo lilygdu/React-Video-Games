@@ -6,12 +6,14 @@ import Form from "./components/Form";
 const App = () => {
   const [games, setGames] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     fetchGames();
   }, []);
 
   const fetchGames = async () => {
+    setIsLoading(true);
     const response = await fetch(
       `https://api.rawg.io/api/games?search=${searchTerm}`
     );
@@ -19,6 +21,7 @@ const App = () => {
     const data = await response.json();
 
     setGames(data.results);
+    setIsLoading(false);
   };
 
   const handleSubmit = (event) => {
@@ -37,9 +40,17 @@ const App = () => {
         setSearchTerm={setSearchTerm}
       />
       <ul id="games">
-        {games.map((game) => (
-          <Game key={game.id} name={game.name} image={game.background_image} />
-        ))}
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          games.map((game) => (
+            <Game
+              key={game.id}
+              name={game.name}
+              image={game.background_image}
+            />
+          ))
+        )}
       </ul>
     </div>
   );
