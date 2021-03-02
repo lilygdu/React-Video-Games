@@ -1,30 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Game from "./components/Game";
-import Search from "./components/Search";
-import Button from "./components/Button";
+// import Search from "./components/Search";
+// import Button from "./components/Button";
 
 const App = () => {
-  const [game, setGame] = React.useState("");
-  // const searchTerm =
+  const [games, setGames] = React.useState([]);
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   React.useEffect(() => {
-    fetchGame();
+    fetchGames();
   }, []);
 
-  const fetchGame = async () => {
-    const response = await fetch("https://api.rawg.io/api/games?search=${}", {
-      header: { Accept: "application/json" },
-    });
+  const fetchGames = async () => {
+    const response = await fetch(
+      `https://api.rawg.io/api/games?search=${searchTerm}`
+    );
 
     const data = await response.json();
-    console.log(data);
-    setGame(data.game);
+    setGames(data.results);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetchGame();
+    fetchGames();
   };
 
   return (
@@ -32,15 +31,22 @@ const App = () => {
       <header>
         <h1>🎮 I'd Rather Be Playing 🕹</h1>
       </header>
-      <Search onChange={fetchGame} />
-      <Button handleClick={fetchGame} />
-      <div>
-        <ul>
-          <li>
-            <Game name={name} image={image} />
-          </li>
-        </ul>
-      </div>
+      <form>
+        <label htmlFor="search">Search</label>
+        <input
+          id="search"
+          name="search"
+          autocomplete="off"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <ul id="games">
+        {games.length > 0 && (
+          <Game name={games[0].name} image={games[0].background_image} />
+        )}
+      </ul>
     </div>
   );
 };
