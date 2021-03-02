@@ -18,6 +18,7 @@ const App = () => {
     );
 
     const data = await response.json();
+
     setGames(data.results);
   };
 
@@ -31,7 +32,7 @@ const App = () => {
       <header>
         <h1>🎮 I'd Rather Be Playing 🕹</h1>
       </header>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="search">Search</label>
         <input
           id="search"
